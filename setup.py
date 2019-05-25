@@ -17,7 +17,7 @@ classifiers = ['Development Status :: 4 - Beta',
                'Topic :: Software Development',
                'Topic :: System :: Hardware']
 
-setup(name              = 'Adafruit_LED_Backpack',
+setup(name              = 'Adafruit_LED_Backpack_kw',
       version           = '1.8.1',
       author            = 'Tony DiCola',
       author_email      = 'tdicola@adafruit.com',
