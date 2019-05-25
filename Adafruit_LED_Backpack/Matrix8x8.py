@@ -19,7 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 from . import HT16K33
-from PIL import Image
+# from PIL import Image
 import time
 
 
@@ -42,26 +42,28 @@ class Matrix8x8(HT16K33.HT16K33):
         self.set_led(y * 16 + ((x + 7) % 8), value)
 
     def set_image(self, image):
-        """Set display buffer to Python Image Library image.  Image will be converted
-        to 1 bit color and non-zero color values will light the LEDs.
-        """
-        imwidth, imheight = image.size
-        if imwidth != 8 or imheight != 8:
-            raise ValueError('Image must be an 8x8 pixels in size.')
-        # Convert image to 1 bit color and grab all the pixels.
-        pix = image.convert('1').load()
-        # Loop through each pixel and write the display buffer pixel.
-        for x in [0, 1, 2, 3, 4, 5, 6, 7]:
-            for y in [0, 1, 2, 3, 4, 5, 6, 7]:
-                color = pix[(x, y)]
-                # Handle the color of the pixel, off or on.
-                if color == 0:
-                    self.set_pixel(x, y, 0)
-                else:
-                    self.set_pixel(x, y, 1)
+        pass
+#         """Set display buffer to Python Image Library image.  Image will be converted
+#         to 1 bit color and non-zero color values will light the LEDs.
+#         """
+#         imwidth, imheight = image.size
+#         if imwidth != 8 or imheight != 8:
+#             raise ValueError('Image must be an 8x8 pixels in size.')
+#         # Convert image to 1 bit color and grab all the pixels.
+#         pix = image.convert('1').load()
+#         # Loop through each pixel and write the display buffer pixel.
+#         for x in [0, 1, 2, 3, 4, 5, 6, 7]:
+#             for y in [0, 1, 2, 3, 4, 5, 6, 7]:
+#                 color = pix[(x, y)]
+#                 # Handle the color of the pixel, off or on.
+#                 if color == 0:
+#                     self.set_pixel(x, y, 0)
+#                 else:
+#                     self.set_pixel(x, y, 1)
 
     def create_blank_image(self):
-        return Image.new("RGB", (8, 8))
+#         return Image.new("RGB", (8, 8))
+        return None
 
 
     def horizontal_scroll(self, image, padding=True):
@@ -82,34 +84,34 @@ class Matrix8x8(HT16K33.HT16K33):
             across without beginning or ending with "whitespace."
             (Default = True)
         """
+        return []
+#         image_list = list()
+#         width = image.size[0]
+#         # Scroll into the blank image.
+#         if padding:
+#             for x in range(8):
+#                 section = image.crop((0, 0, x, 8))
+#                 display_section = self.create_blank_image()
+#                 display_section.paste(section, (8 - x, 0, 8, 8))
+#                 image_list.append(display_section)
 
-        image_list = list()
-        width = image.size[0]
-        # Scroll into the blank image.
-        if padding:
-            for x in range(8):
-                section = image.crop((0, 0, x, 8))
-                display_section = self.create_blank_image()
-                display_section.paste(section, (8 - x, 0, 8, 8))
-                image_list.append(display_section)
+#         #Scroll across the input image.
+#         for x in range(8, width + 1):
+#             section = image.crop((x - 8, 0, x, 8))
+#             display_section = self.create_blank_image()
+#             display_section.paste(section, (0, 0, 8, 8))
+#             image_list.append(display_section)
 
-        #Scroll across the input image.
-        for x in range(8, width + 1):
-            section = image.crop((x - 8, 0, x, 8))
-            display_section = self.create_blank_image()
-            display_section.paste(section, (0, 0, 8, 8))
-            image_list.append(display_section)
+#         #Scroll out, leaving the blank image.
+#         if padding:
+#             for x in range(width - 7, width + 1):
+#                 section = image.crop((x, 0, width, 8))
+#                 display_section = self.create_blank_image()
+#                 display_section.paste(section, (0, 0, 7 - (x - (width - 7)), 8))
+#                 image_list.append(display_section)
 
-        #Scroll out, leaving the blank image.
-        if padding:
-            for x in range(width - 7, width + 1):
-                section = image.crop((x, 0, width, 8))
-                display_section = self.create_blank_image()
-                display_section.paste(section, (0, 0, 7 - (x - (width - 7)), 8))
-                image_list.append(display_section)
-
-        #Return the list of images created
-        return image_list
+#         #Return the list of images created
+#         return image_list
 
     def vertical_scroll(self, image, padding=True):
         """Returns a list of images which appear to scroll from top to bottom
@@ -128,34 +130,34 @@ class Matrix8x8(HT16K33.HT16K33):
             If this is not True, then only the input image will be scroll down
             without beginning or ending with "whitespace." (Default = True)
         """
+        return []
+#         image_list = list()
+#         height = image.size[1]
+#         # Scroll into the blank image.
+#         if padding:
+#             for y in range(8):
+#                 section = image.crop((0, 0, 8, y))
+#                 display_section = self.create_blank_image()
+#                 display_section.paste(section, (0, 8 - y, 8, 8))
+#                 image_list.append(display_section)
 
-        image_list = list()
-        height = image.size[1]
-        # Scroll into the blank image.
-        if padding:
-            for y in range(8):
-                section = image.crop((0, 0, 8, y))
-                display_section = self.create_blank_image()
-                display_section.paste(section, (0, 8 - y, 8, 8))
-                image_list.append(display_section)
+#         #Scroll across the input image.
+#         for y in range(8, height + 1):
+#             section = image.crop((0, y - 8, 8, y))
+#             display_section = self.create_blank_image()
+#             display_section.paste(section, (0, 0, 8, 8))
+#             image_list.append(display_section)
 
-        #Scroll across the input image.
-        for y in range(8, height + 1):
-            section = image.crop((0, y - 8, 8, y))
-            display_section = self.create_blank_image()
-            display_section.paste(section, (0, 0, 8, 8))
-            image_list.append(display_section)
+#         #Scroll out, leaving the blank image.
+#         if padding:
+#             for y in range(height - 7, height + 1):
+#                 section = image.crop((0, y, 8, height))
+#                 display_section = self.create_blank_image()
+#                 display_section.paste(section, (0, 0, 8, 7 - (y - (height - 7))))
+#                 image_list.append(display_section)
 
-        #Scroll out, leaving the blank image.
-        if padding:
-            for y in range(height - 7, height + 1):
-                section = image.crop((0, y, 8, height))
-                display_section = self.create_blank_image()
-                display_section.paste(section, (0, 0, 8, 7 - (y - (height - 7))))
-                image_list.append(display_section)
-
-        #Return the list of images created
-        return image_list
+#         #Return the list of images created
+#         return image_list
 
     def animate(self, images, delay=.25):
         """Displays each of the input images in order, pausing for "delay"
@@ -166,10 +168,11 @@ class Matrix8x8(HT16K33.HT16K33):
         delay -- How many seconds to wait after displaying an image before
             displaying the next one. (Default = .25)
         """
-        for image in images:
-            # Draw the image on the display buffer.
-            self.set_image(image)
+        pass
+#         for image in images:
+#             # Draw the image on the display buffer.
+#             self.set_image(image)
 
-            # Draw the buffer to the display hardware.
-            self.write_display()
-            time.sleep(delay)
+#             # Draw the buffer to the display hardware.
+#             self.write_display()
+#             time.sleep(delay)
